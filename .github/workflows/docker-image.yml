@@ -1,0 +1,25 @@
+name: Docker Image CI
+
+on:
+  schedule:
+    - cron: '0 */2 * * *' # run every 2 hour
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+  
+    - name: checkout repo content
+      uses: actions/checkout@v2 # checkout the repository content to github runner
+      
+
+
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    
+    - name: execute py script # run main.py
+      run: python main.py
